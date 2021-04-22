@@ -18,5 +18,5 @@ outputs:
   rpm_files:
     description: "List of RPM files"
 runs:
-  using: "quay.io/evryfs/github-action-rpmbuild:centos7"
+  using: "quay.io/evryfs/github-actions-rpmbuild:centos7"
   main: "rpmbuilder"
