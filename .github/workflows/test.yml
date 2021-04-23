@@ -7,11 +7,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          repository: https://src.fedoraproject.org/rpms/grep.git
-          path: grep
+      - name: clone repo
+        run: |
+          git clone https://src.fedoraproject.org/rpms/grep.git
       - name: rpmbuilder
         uses: kriberg/rpmbuilder-action/centos7@main
         with:
