@@ -13,7 +13,7 @@ jobs:
           repository: https://src.fedoraproject.org/rpms/grep.git
           path: grep
       - name: rpmbuilder
-        uses: kriberg/rpmbuilder-action/centos7@master
+        uses: kriberg/rpmbuilder-action/centos7@main
         with:
           spec: grep/grep.spec
           spectool: true
