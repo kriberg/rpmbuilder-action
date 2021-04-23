@@ -3,7 +3,7 @@ import os
 import subprocess
 import shutil
 import sys
-from typing import List, Tuple
+from typing import List
 
 from actions_toolkit import core
 
@@ -63,9 +63,8 @@ def build_all(spec: str, output_dir: str) -> List[str]:
 def populate_build_tree(spec: str, source_dir=None):
     try:
         shutil.copy(spec, "/root/rpmbuild/SPECS/")
-        abs_source_dir = os.path.join("/github/workspace", source_dir)
-        if os.path.exists(abs_source_dir):
+        if os.path.exists(source_dir):
             core.info(f"Copying source files from {source_dir}")
-            shutil.copy(os.path.join(abs_source_dir, "*"), "/root/rpmbuild/SOURCES/")
+            shutil.copy(os.path.join(source_dir, "*"), "/root/rpmbuild/SOURCES/")
     except Exception as exc:
         core.set_failed(f"Failed populating package tree: {exc}")
