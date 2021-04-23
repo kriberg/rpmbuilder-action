@@ -12,7 +12,7 @@ jobs:
         with:
           python-version: 3.6
       - name: poetry
-        uses: abatilo/actions-poetry@v2.1.0
+        uses: abatilo/actions-poetry@v2.1.2
         with:
           poetry-version: 1.1.2
       - name: set version
