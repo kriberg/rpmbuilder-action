@@ -1,6 +1,6 @@
 name: Build and push
 on:
-  workflow_run:
+  workflow_dispatch:
 jobs:
   test:
     runs-on: ubuntu-latest
