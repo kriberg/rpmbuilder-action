@@ -1,0 +1,26 @@
+name: Build and push
+on:
+  workflow_run:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          repository: https://src.fedoraproject.org/rpms/grep.git
+          path: grep
+      - name: rpmbuilder
+        uses: kriberg/rpmbuilder-action/centos7@master
+        with:
+          spec: grep/grep.spec
+          spectool: true
+          build_type: bb
+          source_dir: grep
+          output_dir: rpms
+      - name: result
+        run: |
+          echo "Files built ${{ steps.rpmbuilder.outputs.rpm_files }}"
+          file ${{ steps.rpmbuilder.outputs.rpm_files }}

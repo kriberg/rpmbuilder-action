@@ -65,6 +65,7 @@ def populate_build_tree(spec: str, source_dir=None):
         shutil.copy(spec, "/root/rpmbuild/SPECS/")
         abs_source_dir = os.path.join("/github/workspace", source_dir)
         if os.path.exists(abs_source_dir):
+            core.info(f"Copying source files from {source_dir}")
             shutil.copy(os.path.join(abs_source_dir, "*"), "/root/rpmbuild/SOURCES/")
     except Exception as exc:
         core.set_failed(f"Failed populating package tree: {exc}")

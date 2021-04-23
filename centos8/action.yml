@@ -14,9 +14,17 @@ inputs:
     description: "Path to the RPM spec file"
     required: true
     default: "SPECS/*.spec"
+  source_dir:
+    description: "Directory with supplemental source files necessary for building package."
+    required: false
+    default: "SOURCES/"
+  output_dir:
+    description: "Destination directory for all RPM files."
+    required: false
+    default: "."
 outputs:
   rpm_files:
     description: "List of RPM files"
 runs:
-  using: "quay.io/evryfs/github-actions-rpmbuild:centos8"
-  main: "rpmbuilder"
+  using: "docker"
+  image: "quay.io/evryfs/github-actions-rpmbuild:centos7"
