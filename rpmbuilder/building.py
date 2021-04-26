@@ -1,25 +1,18 @@
 import glob
 import os
-import subprocess
 import shutil
 import sys
 from typing import List
-
 from actions_toolkit import core
+from exec import exec
 
 
 def run_spectool(spec: str):
-    proc = subprocess.run(["spectool", "-g", "-R", spec])
-    core.info(str(proc.stdout))
-    if not proc.returncode == 0:
-        core.set_failed(str(proc.stderr))
+    exec(["spectool", "-g", "-R", spec])
 
 
 def build_binary(spec: str, output_dir: str) -> List[str]:
-    proc = subprocess.run(["rpmbuild", "-bb", spec])
-    core.info(str(proc.stdout))
-    if not proc.returncode == 0:
-        core.set_failed(str(proc.stderr))
+    exec(["rpmbuild", "-bb", spec])
     try:
         rpms = glob.glob("/github/home/rpmbuild/RPMS/*.rpm")
         destination = os.path.join("/github/workspace", output_dir)
@@ -36,10 +29,7 @@ def build_binary(spec: str, output_dir: str) -> List[str]:
 
 
 def build_all(spec: str, output_dir: str) -> List[str]:
-    proc = subprocess.run(["rpmbuild", "-ba", spec])
-    core.info(str(proc.stdout))
-    if not proc.returncode == 0:
-        core.set_failed(str(proc.stderr))
+    exec(["rpmbuild", "-ba", spec])
     try:
         rpms = glob.glob("/github/home/rpmbuild/RPMS/*.rpm")
         srpms = glob.glob("/github/home/rpmbuild/SRPMS/*.rpm")
@@ -60,10 +50,7 @@ def build_all(spec: str, output_dir: str) -> List[str]:
 
 
 def populate_build_tree(spec: str, source_dir=None):
-    proc = subprocess.run(["rpmdev-setuptree"])
-    core.info(str(proc.stdout))
-    if not proc.returncode == 0:
-        core.set_failed(str(proc.stderr))
+    exec(["rpmdev-setuptree"])
     try:
         shutil.copy(spec, "/github/home/rpmbuild/SPECS/")
         if os.path.exists(source_dir):

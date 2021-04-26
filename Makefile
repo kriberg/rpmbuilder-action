@@ -1,4 +1,5 @@
 VERSION ?= $(shell grep version pyproject.toml|head -n1|cut -d'"' -f2|xargs echo -n)
+BUILDER ?= docker build
 
 all: wheel images
 
@@ -8,7 +9,7 @@ wheel:
 	poetry build
 
 images:
-	docker build --pull \
+	$(BUILDER) --pull \
 		--build-arg VERSION="$(VERSION)" \
 		-f Dockerfile.centos7 \
 		-t github-actions-rpmbuilder:centos7-latest \
@@ -16,7 +17,7 @@ images:
 		-t quay.io/evryfs/github-actions-rpmbuilder:centos7-latest \
 		-t quay.io/evryfs/github-actions-rpmbuilder:centos7-$(VERSION) \
 		dist/
-	docker build --pull \
+	$(BUILDER) --pull \
 		--build-arg VERSION="$(VERSION)" \
 		-f Dockerfile.centos8 \
 		-t github-actions-rpmbuild:centos8-latest \
