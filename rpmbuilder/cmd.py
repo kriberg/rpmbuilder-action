@@ -4,7 +4,7 @@ from typing import List, Optional
 from actions_toolkit import core
 
 
-def exec(cmd: List[str]) -> Optional[str]:
+def run(cmd: List[str]) -> Optional[str]:
     core.info(f"Running {cmd} in {os.getcwd()}, contents {list(os.scandir())}")
     proc = subprocess.run(cmd)
     core.info(str(proc.stdout))

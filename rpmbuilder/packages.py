@@ -1,10 +1,10 @@
 from typing import List
-from exec import exec
+from rpmbuilder.cmd import run
 
 
 def install_packages(packages: List[str]):
-    exec(["yum", "install", "-y", " ".join(packages)])
+    run(["yum", "install", "-y", " ".join(packages)])
 
 
 def install_build_dependencies(spec: str):
-    exec(["yum-builddep", "-y", "--spec", spec])
+    run(["yum-builddep", "-y", "--spec", spec])

@@ -4,15 +4,15 @@ import shutil
 import sys
 from typing import List
 from actions_toolkit import core
-from exec import exec
+from rpmbuilder.cmd import run
 
 
 def run_spectool(spec: str):
-    exec(["spectool", "-g", "-R", spec])
+    run(["spectool", "-g", "-R", spec])
 
 
 def build_binary(spec: str, output_dir: str) -> List[str]:
-    exec(["rpmbuild", "-bb", spec])
+    run(["rpmbuild", "-bb", spec])
     try:
         rpms = glob.glob("/github/home/rpmbuild/RPMS/*.rpm")
         destination = os.path.join("/github/workspace", output_dir)
@@ -29,7 +29,7 @@ def build_binary(spec: str, output_dir: str) -> List[str]:
 
 
 def build_all(spec: str, output_dir: str) -> List[str]:
-    exec(["rpmbuild", "-ba", spec])
+    run(["rpmbuild", "-ba", spec])
     try:
         rpms = glob.glob("/github/home/rpmbuild/RPMS/*.rpm")
         srpms = glob.glob("/github/home/rpmbuild/SRPMS/*.rpm")
@@ -50,7 +50,7 @@ def build_all(spec: str, output_dir: str) -> List[str]:
 
 
 def populate_build_tree(spec: str, source_dir=None):
-    exec(["rpmdev-setuptree"])
+    run(["rpmdev-setuptree"])
     try:
         shutil.copy(spec, "/github/home/rpmbuild/SPECS/")
         if os.path.exists(source_dir):
