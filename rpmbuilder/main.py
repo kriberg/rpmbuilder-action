@@ -2,7 +2,6 @@ import sys
 from typing import List, Optional
 from distutils.util import strtobool
 from actions_toolkit import core
-
 from rpmbuilder.building import (
     run_spectool,
     build_all,
