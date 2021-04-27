@@ -1,9 +1,5 @@
 FROM registry.hub.docker.com/library/centos:8.3.2011
-ARG VERSION
 LABEL maintainer="Kristian Berg <kristian.berg@tietoevry.com>"
-RUN yum install -y rpm-build rpmdevtools python3-pip yum-utils && yum clean all
-COPY *.whl /tmp
-RUN python3 -m pip install --retries 0 --find-links=/tmp rpmbuilder==$VERSION
-RUN rm /tmp/*
-RUN rpmdev-setuptree
-ENTRYPOINT ["/usr/local/bin/rpmbuilder"]
+RUN yum install -y rpm-build rpmdevtools yum-utils && yum clean all
+COPY rpmbuilder.sh /usr/bin/rpmbuilder
+ENTRYPOINT ["/usr/bin/rpmbuilder"]

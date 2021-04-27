@@ -11,14 +11,16 @@ jobs:
         run: |
           git clone https://src.fedoraproject.org/rpms/grep.git
       - name: rpmbuilder
-        uses: kriberg/rpmbuilder-action/centos7@main
+        uses: kriberg/rpmbuilder-action/centos8@main
         with:
-          spec: grep/grep.spec
+          spec: less/less.spec
           spectool: true
           build_type: bb
-          source_dir: grep
+          source_dir: less
           output_dir: rpms
       - name: result
         run: |
           echo "Files built ${{ steps.rpmbuilder.outputs.rpm_files }}"
-          file ${{ steps.rpmbuilder.outputs.rpm_files }}
+          for FILE in ${{ steps.rpmbuilder.outputs.rpm_files }}; do
+            file $FILE
+          done

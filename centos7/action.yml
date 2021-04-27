@@ -5,7 +5,6 @@ inputs:
   spectool:
     description: "Run spectool to download any external sources referenced in the spec file."
     required: false
-    default: "0"
   build_type:
     description: "Switches between building binaries only (-bb) or with source packages (-ba)."
     required: false
