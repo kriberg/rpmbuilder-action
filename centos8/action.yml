@@ -24,6 +24,7 @@ inputs:
 outputs:
   rpm_files:
     description: "List of RPM files"
+    value: ${{ steps.rpmbuilder.outputs.rpm_files }}
 runs:
   using: "docker"
   image: "docker://quay.io/evryfs/github-actions-rpmbuilder:centos7-0.1.0"
