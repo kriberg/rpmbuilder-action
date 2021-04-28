@@ -1,0 +1,29 @@
+name: "RPM builder"
+description: "A simple github action to build rpms."
+author: "kriberg"
+inputs:
+  spectool:
+    description: "Run spectool to download any external sources referenced in the spec file."
+    required: false
+  build_type:
+    description: "Switches between building binaries only (-bb) or with source packages (-ba)."
+    required: false
+    default: "bb"
+  spec:
+    description: "Path to the RPM spec file."
+    required: true
+    default: "SPECS/*.spec"
+  source_dir:
+    description: "Directory with supplemental source files necessary for building package."
+    required: false
+    default: "SOURCES/"
+  output_dir:
+    description: "Destination directory for all RPM files."
+    required: false
+    default: "."
+outputs:
+  rpm_files:
+    description: "List of RPM files."
+runs:
+  using: "docker"
+  image: "docker://quay.io/evryfs/github-actions-rpmbuilder:centos8-1.0.0"

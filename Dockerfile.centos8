@@ -1,0 +1,5 @@
+FROM registry.hub.docker.com/library/centos:8.3.2011
+LABEL maintainer="Kristian Berg <kristian.berg@tietoevry.com>"
+RUN yum install -y rpm-build rpmdevtools yum-utils && yum clean all
+COPY rpmbuilder.sh /usr/bin/rpmbuilder
+ENTRYPOINT ["/usr/bin/rpmbuilder"]
