@@ -1,14 +1,11 @@
 #!/bin/bash
-set -x
 set -e
 PWD=$(pwd)
 BUILDROOT=$(mktemp -p $PWD -d rpmbuilder.XXX )
 SPEC_FILE="$BUILDROOT/SPECS/$(basename $INPUT_SPEC)"
 
 install_packages () {
-    echo "::group::Installing packages"
     yum install -y $INPUT_PACKAGES
-    echo "::endgroup::"
 }
 
 populate_build_tree () {
@@ -21,21 +18,15 @@ populate_build_tree () {
 }
 
 run_spectool () {
-    echo "::group::Running spectool"
     spectool -g -R $SPEC_FILE
-    echo "::endgroup::"
 }
 
 install_build_dependencies () {
-    echo "::group::Installing build dependencies"
     yum-builddep -y $SPEC_FILE
-    echo "::endgroup::"
 }
 
 build_spec () {
-    echo "::group::Running rpmbuild"
     rpmbuild -$INPUT_BUILD_TYPE $SPEC_FILE
-    echo "::endgroup::"
 }
 
 copy_rpm_files () {
@@ -44,6 +35,7 @@ copy_rpm_files () {
     find $BUILDROOT/SRPMS -type f -name '*.rpm' -exec cp {} $INPUT_OUTPUT_DIR \;
     echo "::set-output name=rpm_files::$(find $INPUT_OUTPUT_DIR -type f|xargs)"
 }
+
 
 if [[ ! -v INPUT_SPEC ]]; then
     echo "::error Specfile not defined"
@@ -54,18 +46,32 @@ if [[ ! -f "$INPUT_SPEC" ]]; then
     exit 1
 fi
 
+echo "::group::Installing packages"
 if [[ -v INPUT_PACKAGES ]]; then
     install_packages
 fi
+echo "::endgroup::"
 
+echo "::group::Populating build tree"
 populate_build_tree
+echo "::endgroup::"
 
+echo "::group::Running spectool"
 if [[ -v INPUT_SPECTOOL ]]; then
     run_spectool
 fi
+echo "::endgroup::"
 
+echo "::group::Installing build dependencies"
 install_build_dependencies
+echo "::endgroup::"
+
+echo "::group::Running rpmbuild"
 build_spec
+echo "::endgroup::"
+
+echo "::group::Copying RPM files"
 copy_rpm_files
+echo "::endgroup::"
 
 rm -rf $BUILDROOT

@@ -1,5 +1,5 @@
 name: "RPM builder"
-description: "A simple github action to build rpms"
+description: "A simple github action to build rpms."
 author: "kriberg"
 inputs:
   spectool:
@@ -23,8 +23,7 @@ inputs:
     default: "."
 outputs:
   rpm_files:
-    description: "List of RPM files"
-    value: ${{ steps.rpmbuilder.outputs.rpm_files }}
+    description: "List of RPM files."
 runs:
   using: "docker"
   image: "docker://quay.io/evryfs/github-actions-rpmbuilder:centos7-0.1.0"
