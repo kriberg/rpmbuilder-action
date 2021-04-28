@@ -26,4 +26,4 @@ outputs:
     description: "List of RPM files."
 runs:
   using: "docker"
-  image: "docker://quay.io/evryfs/github-actions-rpmbuilder:centos8-0.1.0"
+  image: "docker://quay.io/evryfs/github-actions-rpmbuilder:centos8-1.0.0"
