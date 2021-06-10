@@ -33,7 +33,7 @@ copy_rpm_files () {
     mkdir -p $INPUT_OUTPUT_DIR
     find $BUILDROOT/RPMS -type f -name '*.rpm' -exec cp {} $INPUT_OUTPUT_DIR \;
     find $BUILDROOT/SRPMS -type f -name '*.rpm' -exec cp {} $INPUT_OUTPUT_DIR \;
-    echo "::set-output name=rpm_files::$(find $INPUT_OUTPUT_DIR -type f|xargs)"
+    echo "::set-output name=rpm_files::$(find $INPUT_OUTPUT_DIR -type f -name '*.rpm' |xargs)"
 }
 
 
