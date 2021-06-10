@@ -29,10 +29,11 @@ build_spec () {
     rpmbuild -$INPUT_BUILD_TYPE $SPEC_FILE
 }
 
-copy_rpm_files () {
+clean_and_copy () {
     mkdir -p $INPUT_OUTPUT_DIR
-    find $BUILDROOT/RPMS -type f -name '*.rpm' -exec cp {} $INPUT_OUTPUT_DIR \;
-    find $BUILDROOT/SRPMS -type f -name '*.rpm' -exec cp {} $INPUT_OUTPUT_DIR \;
+    find $BUILDROOT/RPMS -type f -name '*.rpm' -exec cp -v {} $INPUT_OUTPUT_DIR \;
+    find $BUILDROOT/SRPMS -type f -name '*.rpm' -exec cp -v {} $INPUT_OUTPUT_DIR \;
+	rm -rf $BUILDROOT
     echo "::set-output name=rpm_files::$(find $INPUT_OUTPUT_DIR -type f -name '*.rpm' |xargs)"
 }
 
@@ -70,8 +71,8 @@ echo "::group::Running rpmbuild"
 build_spec
 echo "::endgroup::"
 
-echo "::group::Copying RPM files"
-copy_rpm_files
+echo "::group::Copying RPM files and removing buildroot"
+clean_and_copy
 echo "::endgroup::"
 
 rm -rf $BUILDROOT
