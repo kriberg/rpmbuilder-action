@@ -12,7 +12,7 @@ jobs:
           git clone https://src.fedoraproject.org/rpms/less.git
       - name: rpmbuilder
         id: rpmbuilder
-        uses: kriberg/rpmbuilder-action/centos8@main
+        uses: evryfs/rpmbuilder-action/centos8@main
         with:
           spec: less/less.spec
           spectool: true
