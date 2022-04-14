@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.1
       - name: clone repo
         run: |
           git clone https://src.fedoraproject.org/rpms/less.git
